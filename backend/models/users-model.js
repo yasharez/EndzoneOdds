@@ -4,3 +4,6 @@
  * 
  * Model file for users collection in MongoDB
  */
+
+'use strict';
+import 'dotenv/config';
