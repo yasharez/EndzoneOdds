@@ -11,7 +11,7 @@
 import mongoose from './db';
 
 // Schema for each matchup
-const matchupSchema = mongoose.Schema({
+const matchupSchema = new mongoose.Schema({
     home_team: { type: String, required: true },
     away_team: { type: String, required: true },
     home_score: { type: Number, required: false },

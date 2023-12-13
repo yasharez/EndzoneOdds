@@ -1,6 +1,6 @@
 /**
  * Yashar Zafari
- * 12/06/2023
+ * 12/12/2023
  * 
  * Model file for users collection in MongoDB
  */
@@ -11,7 +11,7 @@
 import mongoose from './db';
 
 // Schema for each user
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
     sub: { type: String, required: true },
@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
 });
 
 // Compile model from schema
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 // Create User
 const createUser = async (firstName, lastName, sub) => {
