@@ -16,9 +16,8 @@ dotenv.config({ path: '../.env' });
 
 import mongoose from 'mongoose';
 
-console.log(process.env.MONGODB_CONNECT_STRING);
-
 // Connect to database
+// eslint-disable-next-line no-undef
 mongoose.connect(process.env.MONGODB_CONNECT_STRING);
 const db = mongoose.connection;
 
@@ -28,7 +27,7 @@ db.once('open', (error) => {
         console.log(error);
     } else {
         console.log('Connection successful');
-    };
+    }
 });
 
 export { mongoose };

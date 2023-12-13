@@ -33,7 +33,7 @@ const createMatchup = async (homeTeam, awayTeam, spread, season, week) => {
         season: season,
         week: week
     });
-    return matchup.save()
+    return matchup.save();
 }
 
 // Find a matchup
@@ -69,4 +69,4 @@ const editMatchup = async (_id, homeTeam, awayTeam, homeScore, awayScore, spread
 };
 
 // Export model functions for controller
-export { createMatchup, findMatchups, findMatchupByID, deleteMatchupByID, editMatchup }
+export { createMatchup, findMatchups, findMatchupByID, deleteMatchupByID, editMatchup };
