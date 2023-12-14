@@ -13,6 +13,32 @@ import { Strings, ErrorCodes } from '../constants';
 
 const router = express.Router();
 
+// Create a matchup
+router.post('/', (req, res) => {
+    const accepts = req.accepts([Strings.JSON]);
+    if (!accepts) {
+        // No compatible MIME type
+        res.status(406).json({
+            'Error': ErrorCodes['406']
+        });
+    } else if (!validate_all_attributes(req.body)) {
+        // Incorrect attributes sent
+        res.status(400).json({
+            'Error': ErrorCodes['400']
+        });
+    } else {
+        matchups.createMatchup(
+            req.body.home_team, 
+            req.body.away_team, 
+            req.body.spread, 
+            req.body.season, 
+            req.body.week)
+        .then(matchup => {
+            res.status(201).json(matchup);
+        });
+    }
+});
+
 // Get all matchups
 router.get('/', (req, res) => {
     const accepts = req.accepts([Strings.JSON]);
@@ -89,3 +115,40 @@ router.get('/year/:year/week/:week', (req, res) => {
         });
     }
 });
+
+/*------------------------------Helper functions------------------------------*/
+
+/**
+ * Validates all attributes sent in request body. Used in POST
+ * @param {Object} reqBody The request body object
+ * @returns True if attributes are valid, false otherwise
+ */
+function validate_all_attributes(reqBody) {
+    // Unpack variables from body
+    const reqBodyArr = [
+        reqBody.home_team, 
+        reqBody.away_team, 
+        reqBody.spread,
+        reqBody.season,
+        reqBody.week,
+    ];
+
+    // Check if length of body is equal to required attributes
+    if (Object.keys(reqBody).length !== 5) {
+        return false;
+    }
+    // Check if all required attributes are present
+    if (reqBodyArr.some(attr => attr === undefined)) {
+        return false;
+    }
+    // Check type of team names
+    if (typeof reqBody.home_team !== 'string' || typeof reqBody.away_team !== 'string') {
+        return false;
+    }
+    // Check type of numerical values
+    if (typeof reqBody.spread !== 'number' || typeof reqBody.season !== 'number' || typeof reqBody.week !== 'number') {
+        return false;
+    }
+    // Attributes are all present and valid
+    return true;
+}
