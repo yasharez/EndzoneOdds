@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
         res.status(406).json({
             'Error': ErrorCodes['406']
         });
-    } else if (!validate_all_attributes(req.body)) {
+    } else if (!validate_post_attributes(req.body)) {
         // Incorrect attributes sent
         res.status(400).json({
             'Error': ErrorCodes['400']
@@ -32,7 +32,8 @@ router.post('/', (req, res) => {
             req.body.away_team, 
             req.body.spread, 
             req.body.season, 
-            req.body.week)
+            req.body.week
+        )
         .then(matchup => {
             res.status(201).json(matchup);
         });
@@ -62,7 +63,7 @@ router.get('/:id', (req, res) => {
     const accepts = req.accepts([Strings.JSON]);
     if (!accepts) {
         // No compatible MIME type
-        res.status(400).json({
+        res.status(406).json({
             'Error': ErrorCodes['406']
         });
     } else {
@@ -84,7 +85,7 @@ router.get('/year/:year', (req, res) => {
     const accepts = req.accepts([Strings.JSON]);
     if (!accepts) {
         // No compatible MIME type
-        res.status(400).json({
+        res.status(406).json({
             'Error': ErrorCodes['406']
         });
     } else {
@@ -101,7 +102,7 @@ router.get('/year/:year/week/:week', (req, res) => {
     const accepts = req.accepts([Strings.JSON]);
     if (!accepts) {
         // No compatible MIME type
-        res.status(400).json({
+        res.status(406).json({
             'Error': ErrorCodes['406']
         });
     } else {
@@ -116,6 +117,46 @@ router.get('/year/:year/week/:week', (req, res) => {
     }
 });
 
+// Edit matchup
+router.put('/:id', (req, res) => {
+    const accepts = req.accepts([Strings.JSON]);
+    if (!accepts) {
+        // No compatible MIME type
+        res.status(406).json({
+            'Error': ErrorCodes['406']
+        });
+    } else if (!validate_put_attributes(req.body)) { //TODO: UPDATE FUNC
+        // Invalid body attributes
+        res.status(400).json({
+            'Error': ErrorCodes['400']
+        });
+    } else {
+        matchups.editMatchup(
+            req.params.id,
+            req.body.home_team,
+            req.body.away_team,
+            req.body.home_score,
+            req.body.away_score,
+            req.body.spread,
+            req.body.season,
+            req.body.week
+        )
+        .then(modifiedCount => {
+            if (modifiedCount !== 1) {
+                // No matchup found
+                res.status(404).json({
+                    'Error': ErrorCodes['404_matchup']
+                });
+            } else {
+                matchups.findMatchupByID(req.params.id)
+                .then(matchup => {
+                    res.status(200).json(matchup);
+                });
+            }
+        });
+    }
+});
+
 /*------------------------------Helper functions------------------------------*/
 
 /**
@@ -123,7 +164,42 @@ router.get('/year/:year/week/:week', (req, res) => {
  * @param {Object} reqBody The request body object
  * @returns True if attributes are valid, false otherwise
  */
-function validate_all_attributes(reqBody) {
+function validate_post_attributes(reqBody) {
+    // Unpack variables from body
+    const reqBodyArr = [
+        reqBody.home_team, 
+        reqBody.away_team, 
+        reqBody.spread,
+        reqBody.season,
+        reqBody.week,
+    ];
+
+    // Check if length of body is equal to required attributes
+    if (Object.keys(reqBody).length !== 5) {
+        return false;
+    }
+    // Check if all required attributes are present
+    if (reqBodyArr.some(attr => attr === undefined)) {
+        return false;
+    }
+    // Check type of team names
+    if (typeof reqBody.home_team !== 'string' || typeof reqBody.away_team !== 'string') {
+        return false;
+    }
+    // Check type of numerical values
+    if (typeof reqBody.spread !== 'number' || typeof reqBody.season !== 'number' || typeof reqBody.week !== 'number') {
+        return false;
+    }
+    // Attributes are all present and valid
+    return true;
+}
+
+/**
+ * Validates all attributes sent in request body. Used in PUT
+ * @param {Object} reqBody The request body object
+ * @returns True if attributes are valid, false otherwise
+ */
+function validate_put_attributes(reqBody) {
     // Unpack variables from body
     const reqBodyArr = [
         reqBody.home_team, 
