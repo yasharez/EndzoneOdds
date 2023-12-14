@@ -6,3 +6,13 @@
  */
 
 'use strict';
+
+import express from 'express';
+import * as matchupsModel from '../models/matchups-model';
+
+const router = express.Router();
+
+// Get all matchups
+router.get('/', (req, res) => {
+
+});
