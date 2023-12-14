@@ -10,16 +10,17 @@
 // Import dependencies
 import express from 'express';
 import { router } from './index';
+import bodyParser from 'body-parser';
 import 'dotenv/config';
 
 // Configure server
 // eslint-disable-next-line no-undef
 const PORT = process.env.PORT
 const app = express();
-app.use(express.json());
+app.use(bodyParser.json());
 app.use('/', router);
 
 // Display confirmation that server is running on port
 app.listen(PORT, () => {
     console.log(`Server listening on port ${ PORT }...`);
-  });
+});
