@@ -125,7 +125,7 @@ router.put('/:id', (req, res) => {
         res.status(406).json({
             'Error': ErrorCodes['406']
         });
-    } else if (!validate_put_attributes(req.body)) { //TODO: UPDATE FUNC
+    } else if (!validate_put_attributes(req.body)) {
         // Invalid body attributes
         res.status(400).json({
             'Error': ErrorCodes['400']
@@ -174,6 +174,8 @@ function validate_post_attributes(reqBody) {
         reqBody.week,
     ];
 
+    const reqBodyNumArr = reqBodyArr.slice(2);
+
     // Check if length of body is equal to required attributes
     if (Object.keys(reqBody).length !== 5) {
         return false;
@@ -187,7 +189,7 @@ function validate_post_attributes(reqBody) {
         return false;
     }
     // Check type of numerical values
-    if (typeof reqBody.spread !== 'number' || typeof reqBody.season !== 'number' || typeof reqBody.week !== 'number') {
+    if (reqBodyNumArr.every(attr => typeof attr !== 'number')) {
         return false;
     }
     // Attributes are all present and valid
@@ -202,15 +204,19 @@ function validate_post_attributes(reqBody) {
 function validate_put_attributes(reqBody) {
     // Unpack variables from body
     const reqBodyArr = [
-        reqBody.home_team, 
-        reqBody.away_team, 
+        reqBody.home_team,
+        reqBody.away_team,
+        reqBody.home_score,
+        reqBody.away_score,
         reqBody.spread,
         reqBody.season,
         reqBody.week,
     ];
 
+    const reqBodyNumArr = reqBodyArr.slice(2);
+
     // Check if length of body is equal to required attributes
-    if (Object.keys(reqBody).length !== 5) {
+    if (Object.keys(reqBody).length !== 7) {
         return false;
     }
     // Check if all required attributes are present
@@ -222,7 +228,7 @@ function validate_put_attributes(reqBody) {
         return false;
     }
     // Check type of numerical values
-    if (typeof reqBody.spread !== 'number' || typeof reqBody.season !== 'number' || typeof reqBody.week !== 'number') {
+    if (reqBodyNumArr.every(attr => typeof attr !== 'number')) {
         return false;
     }
     // Attributes are all present and valid
