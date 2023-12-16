@@ -174,6 +174,7 @@ function validate_post_attributes(reqBody) {
         reqBody.week,
     ];
 
+    // Separate the numerical values
     const reqBodyNumArr = reqBodyArr.slice(2);
 
     // Check if length of body is equal to required attributes
@@ -189,7 +190,7 @@ function validate_post_attributes(reqBody) {
         return false;
     }
     // Check type of numerical values
-    if (reqBodyNumArr.every(attr => typeof attr !== 'number')) {
+    if (reqBodyNumArr.some(attr => typeof attr !== 'number')) {
         return false;
     }
     // Attributes are all present and valid
@@ -228,9 +229,11 @@ function validate_put_attributes(reqBody) {
         return false;
     }
     // Check type of numerical values
-    if (reqBodyNumArr.every(attr => typeof attr !== 'number')) {
+    if (reqBodyNumArr.some(attr => typeof attr !== 'number')) {
         return false;
     }
     // Attributes are all present and valid
     return true;
 }
+
+export { router };

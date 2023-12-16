@@ -14,8 +14,8 @@ import * as picks from './controllers/picks-controller';
 
 const router = express.Router();
 
-router.use('/users', users);
-router.use('/matchups', matchups);
-router.use('/picks', picks);
+router.use('/users', users.router);
+router.use('/matchups', matchups).router;
+router.use('/picks', picks.router);
 
 export { router }
