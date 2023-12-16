@@ -192,7 +192,7 @@ function validate_post_attributes(reqBody) {
     const reqBodyNumArr = reqBodyArr.slice(2);
 
     // Check if length of body is equal to required attributes
-    if (Object.keys(reqBody).length !== 5) {
+    if (reqBodyArr.length !== 5) {
         return false;
     }
     // Check if all required attributes are present
@@ -231,7 +231,7 @@ function validate_put_attributes(reqBody) {
     const reqBodyNumArr = reqBodyArr.slice(2);
 
     // Check if length of body is equal to required attributes
-    if (Object.keys(reqBody).length !== 7) {
+    if (reqBodyArr.length !== 7) {
         return false;
     }
     // Check if all required attributes are present
