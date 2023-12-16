@@ -157,6 +157,20 @@ router.put('/:id', (req, res) => {
     }
 });
 
+// Delete a matchup
+router.delete('/:id', (req, res) => {
+    matchups.deleteMatchupByID(req.params.id)
+    .then(deletedCount => {
+        if (deletedCount !== 1) {
+            res.status(404).json({
+                'Error': ErrorCodes['404_matchup']
+            });
+        } else {
+            res.status(204).end();
+        }
+    });
+});
+
 /*------------------------------Helper functions------------------------------*/
 
 /**
