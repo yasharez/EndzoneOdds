@@ -38,6 +38,68 @@ router.post('/', (req, res) => {
     }
 });
 
+// Get all users
+router.get('/', (req, res) => {
+    const accepts = req.accepts([Strings.JSON]);
+    if (!accepts) {
+        // No compatible MIME type
+        res.status(406).json({
+            'Error': ErrorCodes['406']
+        });
+    } else {
+        const filter = {};
+        users.findUsers(filter)
+        .then(users => {
+            res.status(200).json(users);
+        });
+    }
+});
+
+// Get user by ID
+router.get('/:id', (req, res) => {
+    const accepts = req.accepts([Strings.JSON]);
+    if (!accepts) {
+        // No compatible MIME type
+        res.status(406).json({
+            'Error': ErrorCodes['406']
+        });
+    } else {
+        users.findUserByID(req.params.id)
+        .then(user => {
+            if (user !== null) {
+                res.status(200).json(user);
+            } else {
+                res.status(404).json({
+                    'Error': ErrorCodes['404_user']
+                });
+            }
+        });
+    }
+});
+
+// Get user by sub
+router.post('/sub', (req, res) => {
+    const accepts = req.accepts([Strings.JSON]);
+    if (!accepts) {
+        // No compatible MIME type
+        res.status(406).json({
+            'Error': ErrorCodes['406']
+        });
+    } else {
+        const filter = { sub: req.body.sub };
+        users.findUsers(filter)
+        .then(user => {
+            if (user !== null) {
+                res.status(200).json(user)
+            } else {
+                res.status(404).json({
+                    'Error': ErrorCodes['404_user']
+                });
+            }
+        });
+    }
+});
+
 /*------------------------------Helper functions------------------------------*/
 
 /**
