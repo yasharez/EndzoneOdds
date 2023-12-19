@@ -115,6 +115,7 @@ router.put('/:id', (req, res) => {
         });
     } else {
         users.editUser(
+            req.params.id,
             req.body.first_name,
             req.body.last_name,
             req.body.sub,

@@ -51,7 +51,7 @@ const deletePickByID = async (_id) => {
 
 // Edit pick
 const editPick = async (_id, matchupID, userID, pick, correct) => {
-    const res = await Pick.replaceOne({
+    const res = await Pick.replaceOne({ _id: _id }, {
         matchup_id: matchupID,
         user_id: userID,
         pick: pick,

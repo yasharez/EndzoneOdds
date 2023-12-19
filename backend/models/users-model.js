@@ -53,7 +53,7 @@ const deleteUserByID = async (_id) => {
 
 // Edit user
 const editUser = async (_id, firstName, lastName, sub, wins, ties2nd, ties3rd) => {
-    const res = await User.replaceOne({
+    const res = await User.replaceOne({ _id: _id }, {
         first_name: firstName,
         last_name: lastName,
         sub: sub,

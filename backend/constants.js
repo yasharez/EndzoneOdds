@@ -16,8 +16,8 @@ const ErrorCodes = {
     '401': 'The provided JWT is missing or invalid',
     '403': 'The provided JWT does not correspond to the requested user',
     '404_user': 'No user with this user_id/sub exists',
-    '404_matchup': 'No matchup with this matchup_id/sub exists',
-    '404_pick': 'No pick with this pick_id/sub exists',
+    '404_matchup': 'No matchup with this matchup_id exists',
+    '404_pick': 'No pick with this pick_id exists',
     '406': 'The requested MIME type is not supported by the API'
 }
 
