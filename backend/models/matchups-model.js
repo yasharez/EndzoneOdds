@@ -8,12 +8,13 @@
 'use strict';
 
 // Mongoose connection to MongoDB
-import mongoose from './db';
+import { mongoose } from './db.js';
 
 // Schema for each matchup
 const matchupSchema = new mongoose.Schema({
     home_team: { type: String, required: true },
     away_team: { type: String, required: true },
+    commence_time: {type: String, required: true},
     home_score: { type: Number, required: false },
     away_score: { type: Number, required: false },
     spread: { type: Number, required: true },

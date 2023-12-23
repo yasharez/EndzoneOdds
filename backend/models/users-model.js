@@ -8,7 +8,7 @@
 'use strict';
 
 // Mongoose connection to MongoDB
-import mongoose from './db';
+import { mongoose } from './db.js';
 
 // Schema for each user
 const userSchema = new mongoose.Schema({

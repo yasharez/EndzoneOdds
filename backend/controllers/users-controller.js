@@ -8,8 +8,8 @@
 'use strict';
 
 import express from 'express';
-import * as users from '../models/users-model';
-import { Strings, ErrorCodes } from '../constants';
+import * as users from '../models/users-model.js';
+import { Strings, ErrorCodes } from '../constants.js';
 
 const router = express.Router();
 

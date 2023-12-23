@@ -8,8 +8,8 @@
 'use strict';
 
 import express from 'express';
-import * as picks from '../models/picks-model';
-import { Strings, ErrorCodes } from '../constants';
+import * as picks from '../models/picks-model.js';
+import { Strings, ErrorCodes } from '../constants.js';
 
 const router = express.Router();
 

@@ -8,11 +8,16 @@
 'use strict';
 
 import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const require = createRequire(import.meta.url);
 const dotenv = require('dotenv');
 
 // Load environment variables
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: __dirname+'/./../.env' });
 
 import mongoose from 'mongoose';
 

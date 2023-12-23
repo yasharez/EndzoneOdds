@@ -8,7 +8,8 @@
 'use strict';
 
 const Strings = {
-    'JSON': 'application/json'
+    'JSON': 'application/json',
+    'ODDS_ENDPOINT': 'https://api.the-odds-api.com',
 }
 
 const ErrorCodes = {

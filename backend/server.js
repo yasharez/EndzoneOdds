@@ -9,7 +9,7 @@
 
 // Import dependencies
 import express from 'express';
-import { router } from './index';
+import { router } from './index.js';
 import bodyParser from 'body-parser';
 import 'dotenv/config';
 
